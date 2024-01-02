@@ -5,11 +5,8 @@ import com.turkcell.rentalservice.business.requests.UpdateRentalRequest;
 import com.turkcell.rentalservice.business.responses.CreatedRentalResponse;
 import com.turkcell.rentalservice.business.responses.GetAllRentalsResponse;
 import com.turkcell.rentalservice.business.service.RentalManager;
-import com.turkcell.rentalservice.dataAccess.RentalRepository;
-import com.turkcell.rentalservice.entities.Rental;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
