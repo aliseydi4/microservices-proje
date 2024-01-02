@@ -2,7 +2,7 @@ package com.turkcell.rentalservice.business.service;
 
 import com.turkcell.rentalservice.dataAccess.RentalRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Service
 public class RentalManager {

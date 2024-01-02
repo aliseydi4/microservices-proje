@@ -47,7 +47,7 @@ public class CarManager {
     }
 
     public AvailableCarsResponse isAvailableCars(String code) {
-        String webClient = builder.build().post().uri("http://localhost:8899/v1/api/rentals/isAvailable", (uriBuilder -> uriBuilder
+        String webClient = builder.build().post().uri("http://rental-service/v1/api/rentals/isAvailable", (uriBuilder -> uriBuilder
                         .queryParam("code", code).build()))
                 .retrieve().bodyToMono(String.class).block();
         Car car = carRepository.findByCode(code).orElseThrow(() -> new RuntimeException("not found code : " + code));
