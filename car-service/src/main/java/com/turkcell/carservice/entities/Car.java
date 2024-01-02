@@ -16,7 +16,7 @@ public class Car {
     private String color;
     private LocalDate years;
     private double dailyPrice;
-    private boolean available;
+    private String available;
 
     public Car() {
     }
@@ -40,7 +40,7 @@ public class Car {
         private String color;
         private LocalDate years;
         private double dailyPrice;
-        private boolean available;
+        private String available;
 
         public Builder id(String id) {
             this.id = id;
@@ -77,7 +77,7 @@ public class Car {
             return this;
         }
 
-        public Builder available(boolean available) {
+        public Builder available(String available) {
             this.available = available;
             return this;
         }
@@ -143,11 +143,11 @@ public class Car {
         this.dailyPrice = dailyPrice;
     }
 
-    public boolean isAvailable() {
+    public String getAvailable() {
         return available;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(String available) {
         this.available = available;
     }
 }

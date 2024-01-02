@@ -1,8 +1,9 @@
-package com.turkcell.carservice.business.requests;
+package com.turkcell.carservice.business.responses;
 
 import java.time.LocalDate;
 
-public class CreateCarRequest {
+public class GetAllCarsResponse {
+    private String id;
     private String code;
     private String brand;
     private String model;
@@ -11,17 +12,26 @@ public class CreateCarRequest {
     private double dailyPrice;
 
 
-    public CreateCarRequest() {
+    public GetAllCarsResponse() {
     }
 
-    public CreateCarRequest(String code, String brand, String model, String color, LocalDate years, double dailyPrice) {
+    public GetAllCarsResponse(String id, String code, String brand, String model, String color, LocalDate years, double dailyPrice) {
         this.code = code;
+        this.id=id;
+
         this.brand = brand;
         this.model = model;
         this.color = color;
         this.years = years;
         this.dailyPrice = dailyPrice;
+    }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCode() {
@@ -68,9 +78,8 @@ public class CreateCarRequest {
         return dailyPrice;
     }
 
+
     public void setDailyPrice(double dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
-
-
 }
