@@ -62,10 +62,11 @@ public class CarManager {
         return new AvailableCarsResponse(car.getId(), car.getCode(), car.getBrand(), car.getModel(), car.getColor(), car.getYears(), car.getDailyPrice(), webClient);
     }
 
-    public UpdateCarResponse update(UpdateCarRequest request) {
-        carRule.checkIfCarCodeExists(request.getCode());
+    public UpdateCarResponse update(UpdateCarRequest request,String id) {
         Car car = new Car.Builder()
-                .brand(request.getBrand()).code(request.getCode())
+                .id(id)
+                .brand(request.getBrand())
+                .code(request.getCode())
                 .model(request.getModel())
                 .color(request.getColor())
                 .years(request.getYears())

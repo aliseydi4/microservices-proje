@@ -17,15 +17,13 @@ public class UpdateCarRequest {
     private String model;
     @NotNull
     private String color;
-    @Positive
-    private LocalDate years;
     @Past
+    private LocalDate years;
+    @Positive
     private double dailyPrice;
 
     public UpdateCarRequest() {
     }
-
-
 
     public String getCode() {
         return code;

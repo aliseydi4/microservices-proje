@@ -40,8 +40,8 @@ public class CarsController {
     }
 
     @PutMapping("update")
-    public UpdateCarResponse update(@RequestBody @Valid UpdateCarRequest request) {
-        return carManager.update(request);
+    public UpdateCarResponse update(@RequestBody @Valid UpdateCarRequest request, @RequestParam String id) {
+        return carManager.update(request,id);
     }
 
     @DeleteMapping("delete")
