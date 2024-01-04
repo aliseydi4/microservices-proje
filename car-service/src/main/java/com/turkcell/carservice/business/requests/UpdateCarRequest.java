@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
-public class CreateCarRequest {
+public class UpdateCarRequest {
     @NotNull
     @NotBlank
     private String code;
@@ -17,24 +17,15 @@ public class CreateCarRequest {
     private String model;
     @NotNull
     private String color;
-    @Past
-    private LocalDate years;
     @Positive
+    private LocalDate years;
+    @Past
     private double dailyPrice;
 
-
-    public CreateCarRequest() {
+    public UpdateCarRequest() {
     }
 
-    public CreateCarRequest(String code, String brand, String model, String color, LocalDate years, double dailyPrice) {
-        this.code = code;
-        this.brand = brand;
-        this.model = model;
-        this.color = color;
-        this.years = years;
-        this.dailyPrice = dailyPrice;
 
-    }
 
     public String getCode() {
         return code;
@@ -83,6 +74,4 @@ public class CreateCarRequest {
     public void setDailyPrice(double dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
-
-
 }

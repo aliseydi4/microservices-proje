@@ -1,10 +1,13 @@
 package com.turkcell.carservice.webApi;
 
 import com.turkcell.carservice.business.requests.CreateCarRequest;
+import com.turkcell.carservice.business.requests.UpdateCarRequest;
 import com.turkcell.carservice.business.responses.AvailableCarsResponse;
 import com.turkcell.carservice.business.responses.CreatedCarResponse;
 import com.turkcell.carservice.business.responses.GetAllCarsResponse;
+import com.turkcell.carservice.business.responses.UpdateCarResponse;
 import com.turkcell.carservice.business.service.CarManager;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +24,7 @@ public class CarsController {
     }
 
     @PostMapping("add")
-    public CreatedCarResponse add(@RequestBody CreateCarRequest request) {
+    public CreatedCarResponse add(@RequestBody @Valid CreateCarRequest request) {
         return carManager.add(request);
     }
 
@@ -33,6 +36,16 @@ public class CarsController {
 
     @GetMapping("isAvailable")
     public AvailableCarsResponse isAvailableCars(@RequestParam String code) {
-            return carManager.isAvailableCars(code);
+        return carManager.isAvailableCars(code);
     }
+
+    @PutMapping("update")
+    public UpdateCarResponse update(@RequestBody @Valid UpdateCarRequest request) {
+        return carManager.update(request);
     }
+
+    @DeleteMapping("delete")
+    public String delete(@RequestParam String code) {
+        return carManager.delete(code);
+    }
+}

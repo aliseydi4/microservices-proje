@@ -1,12 +1,15 @@
 package com.turkcell.carservice.business.service;
 
 import com.turkcell.carservice.business.requests.CreateCarRequest;
+import com.turkcell.carservice.business.requests.UpdateCarRequest;
 import com.turkcell.carservice.business.responses.AvailableCarsResponse;
 import com.turkcell.carservice.business.responses.CreatedCarResponse;
 import com.turkcell.carservice.business.responses.GetAllCarsResponse;
+import com.turkcell.carservice.business.responses.UpdateCarResponse;
 import com.turkcell.carservice.dataAccess.CarRepository;
 import com.turkcell.carservice.entities.Car;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
@@ -52,5 +55,24 @@ public class CarManager {
                 .retrieve().bodyToMono(String.class).block();
         Car car = carRepository.findByCode(code).orElseThrow(() -> new RuntimeException("not found code : " + code));
         return new AvailableCarsResponse(car.getId(), car.getCode(), car.getBrand(), car.getModel(), car.getColor(), car.getYears(), car.getDailyPrice(), webClient);
+    }
+
+    public UpdateCarResponse update(UpdateCarRequest request) {
+        Car car = new Car.Builder()
+                .brand(request.getBrand()).code(request.getCode())
+                .model(request.getModel())
+                .color(request.getColor())
+                .years(request.getYears())
+                .dailyPrice(request.getDailyPrice())
+                .build();
+
+        car = carRepository.save(car);
+        return new UpdateCarResponse(car.getId(), car.getCode());
+    }
+
+    public String delete(String code) {
+        Car car = carRepository.findByCode(code).orElseThrow();
+        carRepository.delete(car);
+        return code;
     }
 }
