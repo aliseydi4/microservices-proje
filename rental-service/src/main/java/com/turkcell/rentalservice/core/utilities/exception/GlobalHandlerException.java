@@ -1,4 +1,4 @@
-package com.turkcell.carservice.core.utilities.exception;
+package com.turkcell.rentalservice.core.utilities.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -14,17 +14,17 @@ import java.util.Map;
 public class GlobalHandlerException {
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public String businessExceptionHandler(BusinessException e){
+    public String businessException(BusinessException e){
         return e.getMessage();
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public Map<String,String>notValidException(MethodArgumentNotValidException e){
+    public Map<String,String>globalHandlerException(MethodArgumentNotValidException e){
         Map<String,String>errors=new HashMap<>();
         e.getBindingResult().getAllErrors().forEach((objectError -> {
-            String errorField=((FieldError)objectError).getField();
+            String fieldError=((FieldError)objectError).getField();
             String errorMessage=objectError.getDefaultMessage();
-            errors.put(errorField,errorMessage);
+            errors.put(fieldError,errorMessage);
         }));
         return errors;
     }

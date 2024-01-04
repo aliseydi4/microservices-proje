@@ -1,11 +1,19 @@
 package com.turkcell.rentalservice.business.requests;
 
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 public class CreateRentalRequest {
+    @NotNull
+    @NotBlank
     private String code;
+    @NotNull
+    @NotEmpty
     private String customerName;
+    @FutureOrPresent
     private LocalDate startDate;
+    @Future
     private LocalDate endDate;
 
     public CreateRentalRequest() {

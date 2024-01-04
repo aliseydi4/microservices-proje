@@ -5,6 +5,7 @@ import com.turkcell.rentalservice.business.requests.UpdateRentalRequest;
 import com.turkcell.rentalservice.business.responses.CreatedRentalResponse;
 import com.turkcell.rentalservice.business.responses.GetAllRentalsResponse;
 import com.turkcell.rentalservice.business.service.RentalManager;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +24,11 @@ public class RentalsController {
         return manager.isAvailable(code);
     }
     @PostMapping("add")
-    public CreatedRentalResponse add(@RequestBody CreateRentalRequest request){
+    public CreatedRentalResponse add(@RequestBody @Valid CreateRentalRequest request){
       return manager.add(request);
     }
     @PutMapping("update")
-    public CreatedRentalResponse update(@RequestParam String id, @RequestBody UpdateRentalRequest request){
+    public CreatedRentalResponse update(@RequestParam @Valid String id, @RequestBody @Valid UpdateRentalRequest request){
         return manager.update(id,request);
     }
     @GetMapping("getAll")
