@@ -6,6 +6,8 @@ import com.turkcell.carservice.business.responses.AvailableCarsResponse;
 import com.turkcell.carservice.business.responses.CreatedCarResponse;
 import com.turkcell.carservice.business.responses.GetAllCarsResponse;
 import com.turkcell.carservice.business.responses.UpdateCarResponse;
+import com.turkcell.carservice.business.rules.CarRule;
+import com.turkcell.carservice.core.utilities.exception.BusinessException;
 import com.turkcell.carservice.dataAccess.CarRepository;
 import com.turkcell.carservice.entities.Car;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,16 @@ import java.util.List;
 public class CarManager {
     private final CarRepository carRepository;
     private final WebClient.Builder builder;
+    private final CarRule carRule;
 
-    public CarManager(CarRepository carRepository, WebClient.Builder builder) {
+    public CarManager(CarRepository carRepository, WebClient.Builder builder, CarRule carRule) {
         this.carRepository = carRepository;
         this.builder = builder;
+        this.carRule = carRule;
     }
 
     public CreatedCarResponse add(CreateCarRequest request) {
+        carRule.checkIfCarCodeExists(request.getCode());
         Car car = new Car.Builder().code(request.getCode())
                 .brand(request.getBrand())
                 .model(request.getModel())
@@ -53,11 +58,12 @@ public class CarManager {
         String webClient = builder.build().post().uri("http://rental-service/v1/api/rentals/isAvailable", (uriBuilder -> uriBuilder
                         .queryParam("code", code).build()))
                 .retrieve().bodyToMono(String.class).block();
-        Car car = carRepository.findByCode(code).orElseThrow(() -> new RuntimeException("not found code : " + code));
+        Car car = carRepository.findByCode(code).orElseThrow(() -> new BusinessException("not found code : " +code));
         return new AvailableCarsResponse(car.getId(), car.getCode(), car.getBrand(), car.getModel(), car.getColor(), car.getYears(), car.getDailyPrice(), webClient);
     }
 
     public UpdateCarResponse update(UpdateCarRequest request) {
+        carRule.checkIfCarCodeExists(request.getCode());
         Car car = new Car.Builder()
                 .brand(request.getBrand()).code(request.getCode())
                 .model(request.getModel())
@@ -71,7 +77,7 @@ public class CarManager {
     }
 
     public String delete(String code) {
-        Car car = carRepository.findByCode(code).orElseThrow();
+        Car car = carRepository.findByCode(code).orElseThrow(()-> new BusinessException("not found code :"+code));
         carRepository.delete(car);
         return code;
     }
