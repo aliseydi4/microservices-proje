@@ -18,7 +18,7 @@ public class ImagesController {
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
-        String url = imageManager.uploadFile(file);
+        String url = imageManager.uploadAndSave(file);
         return "File uploaded successfully: File path :  " + url;
     }
 }
