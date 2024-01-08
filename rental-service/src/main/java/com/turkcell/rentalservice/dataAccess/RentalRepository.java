@@ -12,6 +12,7 @@ public interface RentalRepository extends JpaRepository<Rental,String> {
 
     boolean existsByCode(String code);
     Optional<List<Rental>>findByCode(String code);
-    @Query("select new com.turkcell.rentalservice.business.responses.GetAllRentalsResponse(r.id,r.code,r.customerName,r.startDate,r.endDate)from Rental as r")
+
+    @Query("select new com.turkcell.rentalservice.business.responses.GetAllRentalsResponse(r.id,r.code,r.customerName,r.startDate,r.endDate,r.rentingPrice)from Rental as r")
     List<GetAllRentalsResponse> getAll();
 }

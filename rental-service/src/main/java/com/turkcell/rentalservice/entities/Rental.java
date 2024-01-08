@@ -3,6 +3,7 @@ package com.turkcell.rentalservice.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+
 @Table(name = "rentals")
 @Entity
 public class Rental {
@@ -18,6 +19,9 @@ public class Rental {
     private LocalDate startDate;
     @Column(name = "end_date")
     private LocalDate endDate;
+    @Column(name = "renting_price")
+    private Double rentingPrice;
+
 
     public Rental() {
     }
@@ -28,6 +32,7 @@ public class Rental {
         this.customerName = builder.customerName;
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
+        this.rentingPrice= builder.rentingPrice;
     }
 
     public static class Builder{
@@ -36,6 +41,12 @@ public class Rental {
         private String customerName;
         private LocalDate startDate;
         private LocalDate endDate;
+        private Double rentingPrice;
+
+        public Builder rentingPrice(Double rentingPrice){
+            this.rentingPrice=rentingPrice;
+            return this;
+        }
 
         public Builder id(String id) {
             this.id = id;
@@ -104,5 +115,13 @@ public class Rental {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public double getRentingPrice() {
+        return rentingPrice;
+    }
+
+    public void setRentingPrice(Double rentingPrice) {
+        this.rentingPrice = rentingPrice;
     }
 }

@@ -16,4 +16,9 @@ public class CarRule {
             throw new BusinessException("This code cannot be entered ");
         }
     }
+    public void checkIfRentalCarCode(String code){
+        if (Boolean.FALSE.equals(carRepository.existsByCode(code))){
+             throw new BusinessException("not found code :"+code);
+        }
+    }
 }

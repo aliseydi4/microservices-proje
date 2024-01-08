@@ -6,8 +6,11 @@ import com.turkcell.carservice.business.responses.AvailableCarsResponse;
 import com.turkcell.carservice.business.responses.CreatedCarResponse;
 import com.turkcell.carservice.business.responses.GetAllCarsResponse;
 import com.turkcell.carservice.business.responses.UpdateCarResponse;
+import com.turkcell.carservice.business.rules.CarRule;
 import com.turkcell.carservice.business.service.CarManager;
+import com.turkcell.carservice.entities.Car;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,11 +19,13 @@ import java.util.List;
 @RequestMapping("v1/api/cars")
 public class CarsController {
     private final CarManager carManager;
+    private final CarRule carRule;
 
 
-    public CarsController(CarManager carManager) {
+    public CarsController(CarManager carManager, CarRule carRule) {
         this.carManager = carManager;
 
+        this.carRule = carRule;
     }
 
     @PostMapping("add")
@@ -45,7 +50,17 @@ public class CarsController {
     }
 
     @DeleteMapping("delete")
+    @ResponseStatus(code = HttpStatus.OK)
     public String delete(@RequestParam String code) {
         return carManager.delete(code);
     }
-}
+    @GetMapping("checkIfRentalCodeRule")
+    public void checkIfRentalCarCode(String code) {
+        carRule.checkIfRentalCarCode(code);
+    }
+    @GetMapping("dailyPrice")
+    public double dailyPrice(String code) {
+        return carManager.dailyPrice(code);
+    }
+
+    }

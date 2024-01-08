@@ -30,7 +30,6 @@ public class CarManager {
     }
 
     public CreatedCarResponse add(CreateCarRequest request) {
-        carRule.checkIfCarCodeExists(request.getCode());
         Car car = new Car.Builder().code(request.getCode())
                 .brand(request.getBrand())
                 .model(request.getModel())
@@ -58,11 +57,11 @@ public class CarManager {
         String webClient = builder.build().post().uri("http://rental-service/v1/api/rentals/isAvailable", (uriBuilder -> uriBuilder
                         .queryParam("code", code).build()))
                 .retrieve().bodyToMono(String.class).block();
-        Car car = carRepository.findByCode(code).orElseThrow(() -> new BusinessException("not found code : " +code));
+        Car car = carRepository.findByCode(code).orElseThrow(() -> new BusinessException("not found code : " + code));
         return new AvailableCarsResponse(car.getId(), car.getCode(), car.getBrand(), car.getModel(), car.getColor(), car.getYears(), car.getDailyPrice(), webClient);
     }
 
-    public UpdateCarResponse update(UpdateCarRequest request,String id) {
+    public UpdateCarResponse update(UpdateCarRequest request, String id) {
         Car car = new Car.Builder()
                 .id(id)
                 .brand(request.getBrand())
@@ -78,8 +77,13 @@ public class CarManager {
     }
 
     public String delete(String code) {
-        Car car = carRepository.findByCode(code).orElseThrow(()-> new BusinessException("not found code :"+code));
-        carRepository.delete(car);
+        carRule.checkIfRentalCarCode(code);
+        carRepository.deleteByCode(code);
         return code;
     }
+    public double dailyPrice(String code){
+        Car car=carRepository.findByCode(code).orElseThrow();
+        return car.getDailyPrice();
+    }
+
 }

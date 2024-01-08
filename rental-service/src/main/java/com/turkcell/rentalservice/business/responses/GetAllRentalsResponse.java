@@ -8,16 +8,18 @@ public class GetAllRentalsResponse {
     private String customerName;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Double price;
 
     public GetAllRentalsResponse() {
     }
 
-    public GetAllRentalsResponse(String id, String code, String customerName, LocalDate startDate, LocalDate endDate) {
+    public GetAllRentalsResponse(String id, String code, String customerName, LocalDate startDate, LocalDate endDate,Double price) {
         this.id = id;
         this.code = code;
         this.customerName = customerName;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.price=price;
     }
 
     public String getId() {
@@ -58,5 +60,13 @@ public class GetAllRentalsResponse {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
