@@ -2,8 +2,12 @@ package com.turkcell.rentalservice.business.rules;
 
 import com.turkcell.rentalservice.core.utilities.exception.BusinessException;
 import com.turkcell.rentalservice.dataAccess.RentalRepository;
+import com.turkcell.rentalservice.entities.Rental;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 @Service
 public class RentalRule {
@@ -30,13 +34,22 @@ public class RentalRule {
     }
 
     public Double rentingPrice(String code) {
+        Double daily;
         Double clients;
         clients = builder.build().get().uri("http://car-service/v1/api/cars/dailyPrice", (uriBuilder -> uriBuilder
                         .queryParam("code", code).build()))
                 .retrieve()
                 .bodyToMono(Double.class)
                 .block();
-        return clients;
+        daily=betweenDailyPrice(code);
+        return clients*daily;
+    }
+
+    public double betweenDailyPrice(String code) {
+        Rental rental = repository.findByCode(code);
+        LocalDate start = rental.getStartDate();
+        LocalDate end = rental.getEndDate();
+        return Period.between(start, end).getDays();
     }
 
 }

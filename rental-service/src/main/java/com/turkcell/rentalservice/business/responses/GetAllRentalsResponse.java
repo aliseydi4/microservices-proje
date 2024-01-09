@@ -8,18 +8,18 @@ public class GetAllRentalsResponse {
     private String customerName;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Double price;
+    private double rentingPrice;
 
     public GetAllRentalsResponse() {
     }
 
-    public GetAllRentalsResponse(String id, String code, String customerName, LocalDate startDate, LocalDate endDate,Double price) {
+    public GetAllRentalsResponse(String id, String code, String customerName, LocalDate startDate, LocalDate endDate,double price) {
         this.id = id;
         this.code = code;
         this.customerName = customerName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.price=price;
+        this.rentingPrice=price;
     }
 
     public String getId() {
@@ -63,10 +63,10 @@ public class GetAllRentalsResponse {
     }
 
     public Double getPrice() {
-        return price;
+        return rentingPrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setPrice(double price) {
+        this.rentingPrice = price;
     }
 }

@@ -8,6 +8,7 @@ import com.turkcell.rentalservice.business.rules.RentalRule;
 import com.turkcell.rentalservice.dataAccess.RentalRepository;
 import com.turkcell.rentalservice.entities.Rental;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,51 +24,55 @@ public class RentalManager {
         this.rentalRule = rentalRule;
     }
 
-    public String isAvailable(String code){
-        boolean rental=repository.existsByCode(code);
-        if (Boolean.TRUE.equals(rental)){
+    public String isAvailable(String code) {
+        boolean rental = repository.existsByCode(code);
+        if (Boolean.TRUE.equals(rental)) {
 
             return ("not available for rent");
-        }else {
+        } else {
 
             return ("available for rent");
         }
     }
-    public CreatedRentalResponse add(CreateRentalRequest request){
+    @Transactional
+    public CreatedRentalResponse add(CreateRentalRequest request) {
         rentalRule.checkIfRentalCode(request.getCode());
         rentalRule.checkIfCarCode(request.getCode());
-        Rental rental=new Rental.Builder()
+        Rental rental = new Rental.Builder()
                 .code(request.getCode())
                 .customerName(request.getCustomerName())
-                .startDate(LocalDate.now())
-                .rentingPrice(rentalRule.rentingPrice(request.getCode()))
-                .endDate(request.getEndDate()).build();
-
-        rental=repository.save(rental);
-
-        return new CreatedRentalResponse(rental.getId(),rental.getCode());
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
+                .build();
+        rental = repository.save(rental);
+        rental.setRentingPrice(rentalRule.rentingPrice(rental.getCode()));
+        return new CreatedRentalResponse(rental.getId(), rental.getCode());
     }
-    public CreatedRentalResponse update(String id, UpdateRentalRequest request){
-        rentalRule.checkIfRentalCode(request.getCode());
+    @Transactional
+    public CreatedRentalResponse update( String id,UpdateRentalRequest request) {
         rentalRule.checkIfCarCode(request.getCode());
-        rentalRule.checkIfRentalCode(request.getCode());
-        Rental rental=new Rental.Builder()
+        Rental rental = new Rental.Builder()
                 .id(id)
                 .code(request.getCode())
                 .customerName(request.getCustomerName())
                 .startDate(LocalDate.now())
-                .rentingPrice(rentalRule.rentingPrice(request.getCode()))
-                .endDate(request.getEndDate()).build();
-        rental=repository.save(rental);
-        return new CreatedRentalResponse(rental.getId(),rental.getCode());
+                .endDate(request.getEndDate())
+                .build();
+        rental = repository.save(rental);
+        rental.setRentingPrice(rentalRule.rentingPrice(rental.getCode()));
+        return new CreatedRentalResponse(rental.getId(), rental.getCode());
     }
-    public List<GetAllRentalsResponse> getAll(){
+
+    public List<GetAllRentalsResponse> getAll() {
         return repository.getAll();
     }
-    public String delete(String code){
-       List <Rental> rental=repository.findByCode(code).orElseThrow();
-        repository.deleteAll(rental);
-        return code;
+
+    public void delete(String code) {
+        Rental rental = repository.findByCode(code);
+        repository.delete(rental);
+
     }
+
+
 
 }

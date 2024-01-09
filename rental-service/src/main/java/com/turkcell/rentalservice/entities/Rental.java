@@ -20,7 +20,7 @@ public class Rental {
     @Column(name = "end_date")
     private LocalDate endDate;
     @Column(name = "renting_price")
-    private Double rentingPrice;
+    private double rentingPrice;
 
 
     public Rental() {
@@ -41,9 +41,9 @@ public class Rental {
         private String customerName;
         private LocalDate startDate;
         private LocalDate endDate;
-        private Double rentingPrice;
+        private double rentingPrice;
 
-        public Builder rentingPrice(Double rentingPrice){
+        public Builder rentingPrice(double rentingPrice){
             this.rentingPrice=rentingPrice;
             return this;
         }
@@ -121,7 +121,7 @@ public class Rental {
         return rentingPrice;
     }
 
-    public void setRentingPrice(Double rentingPrice) {
+    public void setRentingPrice(double rentingPrice) {
         this.rentingPrice = rentingPrice;
     }
 }

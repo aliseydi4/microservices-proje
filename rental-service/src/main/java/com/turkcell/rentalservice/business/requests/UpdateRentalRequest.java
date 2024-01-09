@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class UpdateRentalRequest {
+
     @NotNull
     @NotBlank
     private String code;
@@ -52,4 +53,6 @@ public class UpdateRentalRequest {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+
 }
