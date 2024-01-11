@@ -1,7 +1,5 @@
 package org.turkcell.customerservice.business.responses;
 
-import org.turkcell.customerservice.entities.Gender;
-
 public class CreatedCustomerResponse {
     private String id;
     private String name;

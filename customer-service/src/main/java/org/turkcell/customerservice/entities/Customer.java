@@ -2,6 +2,8 @@ package org.turkcell.customerservice.entities;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -13,11 +15,13 @@ public class Customer {
     private String name;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "TCKN")
-    private int TCN;
+    @Column(name = "identification_number")
+    private String TCN;
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Column(name = "balance")
+    private BigDecimal balance;
 
 
     public Customer() {
@@ -29,6 +33,7 @@ public class Customer {
         this.lastName = builder.lastName;
         this.TCN = builder.TCN;
         this.gender = builder.gender;
+        this.balance=builder.balance;
 
     }
 
@@ -36,10 +41,15 @@ public class Customer {
         private String id;
         private String name;
         private String lastName;
-        private int TCN;
+        private String TCN;
+        private BigDecimal balance;
         @Enumerated(EnumType.STRING)
         private Gender gender;
 
+        public Builder balance(BigDecimal balance) {
+            this.balance = balance;
+            return this;
+        }
 
         public Builder id(String id) {
             this.id = id;
@@ -56,7 +66,7 @@ public class Customer {
             return this;
         }
 
-        public Builder TCN(int TCN) {
+        public Builder TCN(String TCN) {
             this.TCN = TCN;
             return this;
         }
@@ -95,11 +105,11 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public int getTCN() {
+    public String getTCN() {
         return TCN;
     }
 
-    public void setTCN(int TCN) {
+    public void setTCN (String TCN) {
         this.TCN = TCN;
     }
 

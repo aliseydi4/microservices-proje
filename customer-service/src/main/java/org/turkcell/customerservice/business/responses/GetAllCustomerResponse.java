@@ -2,28 +2,37 @@ package org.turkcell.customerservice.business.responses;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.*;
 import org.turkcell.customerservice.entities.Gender;
 
-public class CreatCustomerRequest {
-    @NotNull
-    @NotBlank
+import java.math.BigDecimal;
+
+public class GetAllCustomerResponse {
+    private String id;
     private String name;
-    @NotNull
-    @NotBlank
     private String lastName;
-    private int TCN;
+    private String TCN;
+    private BigDecimal balance;
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    public CreatCustomerRequest() {
+    public GetAllCustomerResponse() {
     }
 
-    public CreatCustomerRequest(String name, String lastName, int TCN, Gender gender) {
+    public GetAllCustomerResponse(String id, String name, String lastName, String TCN, BigDecimal balance, Gender gender) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.TCN = TCN;
+        this.balance = balance;
         this.gender = gender;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -42,12 +51,20 @@ public class CreatCustomerRequest {
         this.lastName = lastName;
     }
 
-    public int getTCN() {
+    public String getTCN() {
         return TCN;
     }
 
-    public void setTCN(int TCN) {
+    public void setTCN(String TCN) {
         this.TCN = TCN;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public Gender getGender() {
