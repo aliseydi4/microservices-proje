@@ -41,9 +41,4 @@ public class CustomerManager {
         rule.checkIfCustomerIdAndTCNExists(id);
         repository.deleteByTCN(id);
     }
-    @Transactional
-    public void getAllDelete(String tcn){
-        rule.checkIfCustomerIdAndTCNExists(tcn);
-        repository.deleteAllByTCN(tcn);
-    }
 }

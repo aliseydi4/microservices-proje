@@ -17,6 +17,5 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
     List<GetAllCustomerResponse> getByCodeCustomer(String id);
 
     void deleteByTCN(String tcn);
-    void deleteAllByTCN(String tcn);
     boolean existsByTCN(String tcn);
 }

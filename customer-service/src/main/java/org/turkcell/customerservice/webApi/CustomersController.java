@@ -33,9 +33,5 @@ public class CustomersController {
     public void delete(@RequestParam String tcn){
         customerManager.delete(tcn);
     }
-    @DeleteMapping("getAllDelete")
-    @ResponseStatus(code = HttpStatus.OK)
-    public void getAllDelete(String tcn) {
-            customerManager.getAllDelete(tcn);
-    }
+
     }

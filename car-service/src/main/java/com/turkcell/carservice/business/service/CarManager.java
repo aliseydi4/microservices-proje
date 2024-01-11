@@ -75,7 +75,7 @@ public class CarManager {
         car = carRepository.save(car);
         return new UpdateCarResponse(car.getId(), car.getCode());
     }
-
+    @Transactional
     public String delete(String code) {
         carRule.checkIfRentalCarCode(code);
         carRepository.deleteByCode(code);

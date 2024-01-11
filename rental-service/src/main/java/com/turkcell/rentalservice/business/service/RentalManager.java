@@ -34,6 +34,7 @@ public class RentalManager {
             return ("available for rent");
         }
     }
+
     @Transactional
     public CreatedRentalResponse add(CreateRentalRequest request) {
         rentalRule.checkIfRentalCode(request.getCode());
@@ -48,8 +49,9 @@ public class RentalManager {
         rental.setRentingPrice(rentalRule.rentingPrice(rental.getCode()));
         return new CreatedRentalResponse(rental.getId(), rental.getCode());
     }
+
     @Transactional
-    public CreatedRentalResponse update( String id,UpdateRentalRequest request) {
+    public CreatedRentalResponse update(String id, UpdateRentalRequest request) {
         rentalRule.checkIfCarCode(request.getCode());
         Rental rental = new Rental.Builder()
                 .id(id)
@@ -67,12 +69,11 @@ public class RentalManager {
         return repository.getAll();
     }
 
+    @Transactional
     public void delete(String code) {
-        Rental rental = repository.findByCode(code);
-        repository.delete(rental);
-
+        rentalRule.checkIfNotCode(code);
+        repository.deleteByCode(code);
     }
-
 
 
 }

@@ -21,4 +21,6 @@ public interface RentalRepository extends JpaRepository<Rental, String> {
 
     @Query("select r.endDate,r.startDate from Rental as r where r.code=?1")
     Rental daily(String code);
+
+
 }

@@ -32,6 +32,11 @@ public class RentalRule {
             throw new BusinessException("not available");
         }
     }
+    public void checkIfNotCode(String code){
+        if (Boolean.FALSE.equals(repository.existsByCode(code))){
+            throw new BusinessException("code not found "+ code);
+        }
+    }
 
     public Double rentingPrice(String code) {
         Double daily;
