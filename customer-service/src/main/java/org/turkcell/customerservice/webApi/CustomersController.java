@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.turkcell.customerservice.business.requests.CreatCustomerRequest;
+import org.turkcell.customerservice.business.requests.UpdateCustomerRequest;
 import org.turkcell.customerservice.business.responses.CreatedCustomerResponse;
 import org.turkcell.customerservice.business.responses.GetAllCustomerResponse;
 import org.turkcell.customerservice.business.rules.CustomerRule;
@@ -41,5 +42,10 @@ public class CustomersController {
     @PutMapping("balanceUpdate")
     public void balanceAndName(double balance, String id){
         customerRule.balance(balance,id);
+    }
+
+    @PutMapping("update")
+    public CreatedCustomerResponse update(@RequestBody @Valid UpdateCustomerRequest request,@RequestParam String id){
+        return customerManager.update(id,request);
     }
     }

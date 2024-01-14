@@ -13,7 +13,7 @@ public class Rental {
     private String id;
     @Column(name = "code")
     private String code;
-    @Column(name = "customer_name")
+    @Column(name = "customer_id")
     private String customerName;
     @Column(name = "start_date")
     private LocalDate startDate;

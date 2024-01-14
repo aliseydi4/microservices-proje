@@ -3,6 +3,7 @@ package org.turkcell.customerservice.business.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.turkcell.customerservice.business.requests.CreatCustomerRequest;
+import org.turkcell.customerservice.business.requests.UpdateCustomerRequest;
 import org.turkcell.customerservice.business.responses.CreatedCustomerResponse;
 import org.turkcell.customerservice.business.responses.GetAllCustomerResponse;
 import org.turkcell.customerservice.business.rules.CustomerRule;
@@ -40,5 +41,16 @@ public class CustomerManager {
     public void delete(String id){
         rule.checkIfCustomerIdAndTCNExists(id);
         repository.deleteByTCN(id);
+    }
+    public CreatedCustomerResponse update(String id,UpdateCustomerRequest request){
+        Customer customer=new Customer.Builder().name(request.getName())
+                .id(id)
+                .lastName(request.getLastName())
+                .TCN(request.getTCN())
+                .gender(request.getGender())
+                .balance(request.getBalance())
+                .build();
+        customer=repository.save(customer);
+        return new CreatedCustomerResponse(customer.getId(), customer.getName());
     }
 }
