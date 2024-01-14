@@ -41,4 +41,10 @@ public class GlobalException {
         return e.getMessage();
     }
 
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public String getIllegalArgumentException(java.lang.IllegalArgumentException e){
+        return e.getMessage();
+    }
 }

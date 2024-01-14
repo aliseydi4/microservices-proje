@@ -5,6 +5,7 @@ import com.turkcell.rentalservice.entities.Rental;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,5 +23,8 @@ public interface RentalRepository extends JpaRepository<Rental, String> {
     @Query("select r.endDate,r.startDate from Rental as r where r.code=?1")
     Rental daily(String code);
 
+
+    @Query("select r.rentingPrice from Rental as r where r.id=?1")
+    double price(String id);
 
 }

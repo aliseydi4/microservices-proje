@@ -46,5 +46,8 @@ public class RentalsController {
         manager.delete(code);
 
     }
-
+    @PostMapping("price")
+    public double price(String id) {
+        return manager.price(id);
+    }
 }

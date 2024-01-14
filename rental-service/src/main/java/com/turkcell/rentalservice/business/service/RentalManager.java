@@ -47,6 +47,7 @@ public class RentalManager {
                 .build();
         rental = repository.save(rental);
         rental.setRentingPrice(rentalRule.rentingPrice(rental.getCode()));
+        rentalRule.balance(rental.getRentingPrice(),rental.getCustomerName());
         return new CreatedRentalResponse(rental.getId(), rental.getCode());
     }
 
@@ -75,5 +76,7 @@ public class RentalManager {
         repository.deleteByCode(code);
     }
 
-
+    public double price(String id){
+        return repository.price(id);
+    }
 }

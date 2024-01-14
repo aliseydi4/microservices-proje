@@ -6,17 +6,21 @@ import org.springframework.web.bind.annotation.*;
 import org.turkcell.customerservice.business.requests.CreatCustomerRequest;
 import org.turkcell.customerservice.business.responses.CreatedCustomerResponse;
 import org.turkcell.customerservice.business.responses.GetAllCustomerResponse;
+import org.turkcell.customerservice.business.rules.CustomerRule;
 import org.turkcell.customerservice.business.service.CustomerManager;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
 @RequestMapping("customers")
 public class CustomersController {
     private final CustomerManager customerManager;
+    private final CustomerRule customerRule;
 
-    public CustomersController(CustomerManager customerManager) {
+    public CustomersController(CustomerManager customerManager, CustomerRule customerRule) {
         this.customerManager = customerManager;
+        this.customerRule = customerRule;
     }
     @PostMapping("add")
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -34,4 +38,8 @@ public class CustomersController {
         customerManager.delete(tcn);
     }
 
+    @PutMapping("balanceUpdate")
+    public void balanceAndName(double balance, String id){
+        customerRule.balance(balance,id);
+    }
     }

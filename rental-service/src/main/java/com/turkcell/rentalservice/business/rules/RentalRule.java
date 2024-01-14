@@ -6,6 +6,7 @@ import com.turkcell.rentalservice.entities.Rental;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -55,6 +56,16 @@ public class RentalRule {
         LocalDate start = rental.getStartDate();
         LocalDate end = rental.getEndDate();
         return Period.between(start, end).getDays();
+    }
+    public void balance(double price,String id){
+            builder.build()
+                    .put()
+                    .uri("http://customer-service/customers/balanceUpdate",(uriBuilder -> uriBuilder
+                            .queryParam("balance",price)
+                            .queryParam("id",id)
+                            .build()))
+                    .retrieve()
+                    .bodyToMono(Void.class).block();
     }
 
 }

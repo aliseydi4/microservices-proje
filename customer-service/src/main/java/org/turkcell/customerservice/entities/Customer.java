@@ -121,5 +121,11 @@ public class Customer {
         this.gender = gender;
     }
 
+    public BigDecimal getBalance() {
+        return balance;
+    }
 
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 }
